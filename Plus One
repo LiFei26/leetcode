@@ -1,0 +1,18 @@
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        '''列表最后一位数字小于9'''
+        if digits[-1]<9:
+            digits[-1] = digits[-1]+1
+            return digits
+        
+        else:
+            digits[-1]=0
+            if len(digits)>1:#对于只有一位数字9的处理
+                a = digits[:len(digits)-1]
+            else:
+                a = digits[:len(digits)]
+            return self.plusOne(a)+[digits[-1]]
