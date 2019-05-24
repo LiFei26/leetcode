@@ -1,0 +1,24 @@
+#问题描述
+#You are climbing a stair case. It takes n steps to reach to the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Note: Given n will be a positive integer.
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        ''''动态规划 dp[i]代表爬到第i层有几种方法
+        dp[0] = 1
+        dp[1] = 2
+        dp[2] = dp[0]+dp[1]
+        dp[i] = dp[i-1]+dp[i-2] 爬到第i层有种方式，相当于爬到i-1层加上i-2层方式的和'''
+        if n==1:
+            return 1
+        dp = [1 for i in range(n)]
+        dp[1] = 2
+        for j in range(2,n):
+            dp[j]=dp[j-1]+dp[j-2]
+        return dp[i]
