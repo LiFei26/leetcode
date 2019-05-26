@@ -1,0 +1,45 @@
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+def create(root):#创建一个二叉树
+    a = input('input a key:')
+    if a is '#':
+        root = None
+    else:
+        root = TreeNode(a)
+        root.left=create(root.left)
+        root.right=create(root.right)
+    return root
+def inorderTraversal(root):#中序遍历
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+
+        if root is None:
+            return
+        else:
+            inorderTraversal(root.left)
+            print(root.val)
+            inorderTraversal(root.right)
+        return a      
+def preorderTraversal(root):#先序遍历
+    if root is None:
+        return
+    else:
+        print(root.val)
+        preorderTraversal(root.left)
+        preorderTraversal(root.right)
+def postorderTraversal(root):#后序遍历
+    if root is None:
+        return
+    else:
+        postorderTraversal(root.left)
+        postorderTraversal(root.right)
+        print(root.val)
+root=None
+root=create(root)
+preorderTraversal(root)
+inorderTraversal(root)
