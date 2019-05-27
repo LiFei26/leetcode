@@ -1,0 +1,45 @@
+#问题描述：判断一个二叉树是不是BST
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        # '''BST中序遍历是有序的'''
+        # a=[]
+        # def inorder(root):
+        #     if root is None:
+        #         return
+        #     if root.left:
+        #         inorder(root.left)
+        #     a.append(root.val)
+        #     if root.right:
+        #         inorder(root.right)
+        # inorder(root)
+        # if len(a)!=len(set(a)):#如果集合的长度不等于列表的长度，代表列表里面有重复元素
+        #     return False
+        # else:
+        #     b = sorted(a)
+        #     if a==b :
+        #         return True
+        #     else:
+        #         return False
+        '''用栈的形式，先寻找最左边的节点，帮经过的节点压入栈里面，第一个被弹出来是最左边的节点，然后访问其右节点，然后对于右子树同样的方法'''
+        if root is None:
+            return True
+        cur = root
+        pre = None
+        s = []
+        while True:
+            while cur:#遍历左节点
+                s.append(cur)
+                cur = cur.left
+            if not s:#如果栈为空
+                break
+            #没有左节点，只处理当前节点
+            cur=s.pop()
+            if pre!=None and pre.val>=cur.val:#前一个节点大于当前节点，这不是BST
+                return False
+            pre=cur
+            cur = cur.right    
+        return True   
