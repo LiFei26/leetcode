@@ -4,7 +4,7 @@ class Solution(object):
         """
         :type n: int
         :rtype: int
-        <a href=https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0>卡塔兰数</a>
+        [卡塔兰数](https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0)
         递推公式c（2n,n）/n+1
         """
         res = 1
