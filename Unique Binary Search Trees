@@ -1,0 +1,13 @@
+#问题描述，Given n, how many structurally unique BST's (binary search trees) that store values 1 ... n?
+class Solution(object):
+    def numTrees(self, n):
+        """
+        :type n: int
+        :rtype: int
+        <a href=https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0>卡塔兰数</a>
+        递推公式c（2n,n）/n+1
+        """
+        res = 1
+        for i in range(n+1,2*n+1):
+            res=res*i/(i-n)
+        return res/(n+1)
