@@ -1,0 +1,45 @@
+#问题描述：Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1 ... n.
+Example:
+Input: 3
+Output:
+[
+  [1,null,3,2],
+  [3,2,null,1],
+  [3,1,null,null,2],
+  [2,1,3],
+  [1,null,2,null,3]
+]
+Explanation:
+The above output corresponds to the 5 unique BST's shown below:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+class Solution(object):
+    def generateTrees(self, n):
+        """
+        :type n: int
+        :rtype: List[TreeNode]
+        """
+        if n==0:
+            return []
+        def helper(left,right):
+            if left > right:#边界问题，返回[None]
+                return [None]
+            res = []
+            #以不同的数作为root，会产生什么样的结果呢？这就由i左边的数可以构成什么样的二叉搜索树，
+            i右边的数可以构成什么样的二叉搜索树决定。接着我们就会在i的左边去找一个左子树root，
+            在i的右边去找一个右子树的root，这就是递归的过程。
+            for i in range(left,right+1):
+                left_nodes = helper(left,i-1)
+                right_nodes = helper(i+1,right)
+                for l in left_nodes:
+                    for r in right_nodes:
+                        root=TreeNode(i)
+                        root.left=l
+                        root.right=r
+                        res.append(root)
+            return res
+        return helper(1,n)
