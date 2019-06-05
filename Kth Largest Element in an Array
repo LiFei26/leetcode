@@ -1,0 +1,42 @@
+#问题描述
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Example 1:
+
+Input: [3,2,1,5,6,4] and k = 2
+Output: 5
+Example 2:
+
+Input: [3,2,3,1,2,4,5,5,6] and k = 4
+Output: 4
+#这道题主要考察快速排序
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        # res = sorted(nums,reverse=True)
+        # return res[k-1]
+        self.quickSort(nums,0,len(nums)-1)
+        return nums[k-1]
+        
+    def quickSort(self,nums, left, right):#这里是从大到小排序
+        '''nums:list'''
+        if left>=right:#递归终止条件
+            return nums
+        low = left
+        high = right
+        key = nums[low]#参考点
+        while left<right:#循环的条件
+            while left<right and nums[right]<=key:#从最右边开始依次向前。。
+                right-=1
+            nums[left] = nums[right]#当nums[right]大于参考点挪到左边
+            while left<right and nums[left]>=key:#从最左边开始依次向后
+                left+=1
+            nums[right]=nums[left]#当left小于参考点，就挪到右边
+        nums[right]=key#将参考点插入
+        self.quickSort(nums,low,left-1)
+        self.quickSort(nums,left+1,high)
+        return nums
