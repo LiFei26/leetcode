@@ -1,0 +1,41 @@
+#问题描述
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+Integers in each row are sorted in ascending from left to right.
+Integers in each column are sorted in ascending from top to bottom.
+Example:
+Consider the following matrix:
+[
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return true.
+
+Given target = 20, return false.
+#解题思路，这道题每一行，每一列都是按升序排序的。用分治法的思想，分值，比如右上角的数字15，比如target小于这个数字，那么这一列的数字都可以比较。
+11，7都这是这样。在看4这一列，target>4,则4所在的行元素可以不用比较。然后直到矩阵都查找完。时间复杂度O（n）
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix:
+            return False
+        if not matrix[0]:
+            return False
+        i = 0
+        j = len(matrix[0]) - 1
+        while j>=0 and i<len(matrix):
+            if target<matrix[i][j]:
+                j-=1
+            elif target>matrix[i][j]:
+                i+=1
+            else:
+                return True
+        return False
+
+        
