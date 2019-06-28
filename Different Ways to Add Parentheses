@@ -1,0 +1,55 @@
+'''
+Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *.
+
+Example 1:
+
+Input: "2-1-1"
+Output: [0, 2]
+Explanation: 
+((2-1)-1) = 0 
+(2-(1-1)) = 2
+Example 2:
+
+Input: "2*3-4*5"
+Output: [-34, -14, -10, -10, 10]
+Explanation: 
+(2*(3-(4*5))) = -34 
+((2*3)-(4*5)) = -14 
+((2*(3-4))*5) = -10 
+(2*((3-4)*5)) = -10 
+(((2*3)-4)*5) = 10
+'''
+#问题描述
+'''这道题的是让字符串根据添加括号的位置，然后得到不同的计算结果，保证输入的格式是有效的。
+首先，特殊情况，假设字符串只有一个长度，及一个数字，那么很容易得到结果。
+再来看2-1，我们以符号为界限，分为左和右，然后计算。
+然后我们在看2-1-1，有2种结果，其中2-1计算的结果，也就是上面的一步，和1想减，
+我们可以假设2-1是一个整体（），然后（）-1，和2—()，括号里面的东西我们可以不管，
+这样推到一般就是（）？（），？代表符号,循环遍历字符串，然后每遇到一个？就计算，左右括号代表计算的结果，递归求得。采用了分而治之的思想'''
+class Solution(object):
+    def diffWaysToCompute(self, input):
+        """
+        :type input: str
+        :rtype: List[int]
+        """
+        if not input:
+            return None
+        res = []
+        for i in range(len(input)):#循环遍历字符串
+            if input[i] =='+' or input[i]=='-' or input[i]=='*':
+            '''将字符串分为左右2部分，递归调用'''
+                lefts = self.diffWaysToCompute(input[:i])
+                rights = self.diffWaysToCompute(input[i+1:])
+                for left in lefts:#遍历左列表
+                    for right in rights:#遍历右列表
+                        if input[i]=='+':
+                            res.append(left+right)
+                        if input[i]=='-':
+                            res.append(left-right)
+                        if input[i]=='*':
+                            res.append(left*right)
+        if not res:#res 为空
+            res.append(int(input))
+        return res
+           
+        
