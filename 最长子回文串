@@ -1,0 +1,32 @@
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+Example 1:
+
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+'''这里看到字符串，极值，首先想到的就是DP，定义一个二元数组dp[i][j],代表(i,j)范围是否为回文串，
+
+首先看s[i]==s[j]  j-i<2 代表2个或者3个字符，j-i>2 这需要中间也满足dp[i+1][j-1]
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s)<2:
+            return s
+        maxlen = 0
+        start = 0
+        end = 0
+        dp = [[1 if i==j else 0 for i in range(len(s))] for j in range(len(s))]
+        for i in range(len(dp)):
+            for j in range(i):
+                dp[j][i] = (s[i] == s[j] and (i - j < 2 or dp[j + 1][i - 1]))
+                if maxlen<i-j+1 and dp[j][i]:
+                    maxlen = i-j+1
+                    start=j
+                    end =i
+        return s[start:end+1]
+        
+                        
