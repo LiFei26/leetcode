@@ -1,0 +1,29 @@
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+Example:
+
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+'''这里看到要列出所有的情况，首先就要想到，回溯法，而这里回溯的条件有点不同，目前的结果是回文串，然后从后面的字符开始回溯'''
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        res = []
+        self.isPalindrome = lambda s:s==s[::-1]
+        self.helper(s,res,[])
+        return res
+    def helper(self,s,res,path):
+        if not s:
+            res.append(path)
+            return
+        for i in range(1,len(s)+1):#注意起始位置和结束位置
+            if self.isPalindrome(s[:i]):
+                self.helper(s[i:],res,path+[s[:i]])
