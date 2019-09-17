@@ -1,0 +1,23 @@
+#问题描述，给出2个序列，第一个序列，表示栈的压入顺序，另一个表示可能出栈的序列。比如入栈的顺序1，2，3，4，5，序列4，5，3，2，1是该入栈序列对应的一个弹出
+序列，而4，3，5，1，2
+这里要引入一个辅助栈，模拟入栈序列，当压入栈顶的元数等于另一个弹出序列的元数，则辅助栈弹出该元素，然后重复执行。。循环结束的条件栈为空或者辅助栈的栈顶元素
+不等于弹出序列的元素。
+class Solution:
+    def IsPopOrder(self, pushV, popV):
+        # write code here
+        res = False
+        if len(pushV)==0 or len(popV)==0:
+            res = False
+        stack = []
+        #用于标识弹出序列的位置
+        popIndex = 0
+        for i in range(len(pushV)):
+            stack.insert(0,pushV[i])
+            while stack and stack[0] ==popV[popIndex]:
+                stack.pop(0)#默认是弹出最后一个元素
+                popIndex+=1
+        if not stack and popIndex==len(popV):#stack为空，且弹出位置
+            res = True
+        else:
+            res = False
+        return res
