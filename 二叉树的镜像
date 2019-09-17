@@ -1,0 +1,21 @@
+#问题描述，给定二叉树，将二叉树变换为二叉树的镜像
+递归思想，首先交换根节点左右子树，然后向下递归，帮左右子树的根节点，作为下次循环的节点
+class Solution:
+    # 返回镜像树的根节点
+    def Mirror(self, root):
+        # write code here
+        #递归思想，先交换根节点左右子树的位置，然后向下递归，把左右子树的根节点作为下次循环的根节点
+        if not root:
+            return root
+        if not root.left and not root.right:
+            return root
+        #交换左右子树
+        tmp = None
+        tmp = root.left
+        root.left = root.right
+        root.right = tmp
+        #递归
+        if root.left:
+            self.Mirror(root.left)
+        if root.right:
+            self.Mirror(root.right)
