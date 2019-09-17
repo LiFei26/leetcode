@@ -1,0 +1,25 @@
+#问题描述，输入2棵二叉树，A,B，判断B是不是A的子结构（ps:空树不是任意一个树的子结构）
+问题分析：
+一般二叉树的问题，多数可以用递归的思想去解决，首先我们用A的根节点去和B的根节点比较，如果不等，则递归调用左子树，若都不是，则递归调用右子树。
+这里判断相等，还需要单独一个函数，也要用到递归的思想，递归比较A的左子树和B的左子树，A的右子树和B的右子树是否相等
+class Solution:
+    def HasSubtree(self, pRoot1, pRoot2):
+        # write code here
+        result = False
+        if pRoot1 and pRoot2:
+            if pRoot1.val == pRoot2.val:
+                result = self.isEqual(pRoot1,pRoot2)
+            if not result:#如果根节点不同，则递归调用左子树
+                result = self.isEqual(pRoot1.left,pRoot2)
+            if not result:#若还是不是，则递归调用右子树
+                result = self.isEqual(pRoot1.right,pRoot2)
+        return result
+    def isEqual(self,root1,root2):
+        if not root2:#B树为空
+            return True
+        if not root1:#二叉树A为空
+            return False
+        if root1.val!=root2.val:#节点不相等
+            return False
+        #节点值相等，则分别判断起左子节点和右子节点
+        return self.isEqual(root1.left,root2.left) and self.isEqual(root1.right,root2.right)
