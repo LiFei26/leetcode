@@ -1,0 +1,23 @@
+#问题，给你一副扑克牌，随机抽5张牌，然后如果是顺子就返回为真，否则返回假，这里面大小王起初设为0，在应用的时候可以变成任何数字。
+class Solution:
+    def IsContinuous(self, numbers):
+        # write code here
+        #0表示任意数字
+        #中间的数，和0的个数，如果中间数大于0的个数就不能拼起。
+        if not numbers:#字符串为空
+            return False
+        numbers.sort()
+        res_0 = 0
+        res = 0
+        for i in range(len(numbers)):
+            if numbers[i]==0:
+                res_0+=1
+                continue
+            if i>=1 and numbers[i]-numbers[i-1]>=2 and numbers[i-1]!=0:
+                res+=numbers[i]-numbers[i-1]-1
+            if numbers[i-1]==numbers[i]:#字符重复
+                return False
+        if res>res_0:
+            return False
+        else:
+            return True
