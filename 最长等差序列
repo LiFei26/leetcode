@@ -1,0 +1,30 @@
+问题描述：给你一个int列表，算出最大化的等差序列
+Input: [9,4,7,2,10]
+Output: 3
+Explanation: 
+The longest arithmetic subsequence is [4,7,10].
+列表的元素至少大于等于2，且里面的各个元素值在【0，10000】
+DP求解，dp[diff][i]表示等差为diff,到达i位置的最长子序列长度，
+class Solution(object):
+    def longestArithSeqLength(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        '''dp[diff][i]表示等差为diff,到达i位置的最长子序列长度'''
+        if len(A)==2:
+            return 2
+        res = 2
+        dp = [[0]*len(A) for i in range(20001)]
+        for i in range(len(A)):
+            for j in range(i):
+                diff=A[i]-A[j]+10000
+                #判断差值是否出现过
+                if dp[diff][j]==0:
+                    dp[diff][i]=2#最小为2
+                    continue
+                dp[diff][i]=max(dp[diff][i],dp[diff][j]+1)
+                res = max(res,dp[diff][i])
+        return res
+        
+        
