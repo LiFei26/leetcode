@@ -1,0 +1,45 @@
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+The solution set must not contain duplicate triplets.
+
+Example:
+Given array nums = [-1, 0, 1, 2, -1, -4],
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        '''难点怎么去除一些数字一样，只是顺序不一样的答案'''
+        res = []
+        nums.sort()#从小到大排序
+        if not nums or nums[-1]<0 or nums[0]>0:#当一个数字大于0，最后一个数字小于0，不满足题意
+            return
+        for k in range(len(nums)-2):#k一直循环到倒数第三个数字
+            if nums[k]>0:#第一个数字就大于0，不符合题意
+                break
+            if k>0 and nums[k]==nums[k-1]:#如果当前数字，和前一个数字相等，那么需要continue，因为题目不需要重复的答案
+                continue
+            target = 0-nums[k]#固定一个数字，然后找另外两个数字的和等于这个target
+            i = k+1#采用双指针的形式找
+            j = len(nums)-1
+            while i<j:
+                if nums[i]+nums[j]==target:#如果找到了，就需要跳过重复的数字
+                    res.append([nums[k],nums[i],nums[j]])
+                    while i<j and nums[i]==nums[i+1] :#这里是需要跳过重复的数字,还有这里的条件顺序不能换，换了就出错了
+                        i+=1
+                    while  i<j and nums[j]==nums[j-1] :
+                        j-=1
+                    i+=1
+                    j-=1
+                elif nums[i]+nums[j]<target:#如果2个数小，这左边的指针i就要右移一位
+                    i+=1
+                else:#两个数大，右边的指针j就要向左移动
+                    j-=1
+        return res
